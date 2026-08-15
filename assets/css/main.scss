@@ -1,7 +1,7 @@
 ---
 ---
 /*
- *    victorhuu.github.io — Oxford Classic
+ *    victorhuu.github.io — Tongji Academic
  *    Base: Minimal Mistakes / academicpages (trimmed)
  */
 
@@ -26,10 +26,7 @@
 @import "vendor/font-awesome/solid";
 @import "vendor/font-awesome/brands";
 
-/* ====================================================================== */
-/* Oxford Classic — load LAST so cascade wins                             */
-/* ====================================================================== */
-
+/* Existing component system */
 @import "oxford";
 @import "topnav";
 @import "oxford-footer";
@@ -41,3 +38,6 @@
 @import "oxford-anim";
 @import "oxford-dark";
 @import "oxford-print";
+
+/* Tongji visual layer — loaded last so it wins the cascade */
+@import "tongji";
