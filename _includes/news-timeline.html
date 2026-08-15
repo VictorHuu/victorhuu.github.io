@@ -1,0 +1,10 @@
+{%- assign items = site.data.news | sort: 'date' | reverse -%}
+<ol class="ox-timeline">
+  {%- for item in items -%}
+    <li class="ox-timeline__item">
+      <span class="ox-timeline__dot" aria-hidden="true"></span>
+      <time class="ox-timeline__date" datetime="{{ item.date }}">{{ item.date | replace: '-', '.' }}</time>
+      <div class="ox-timeline__text">{{ item.text | markdownify | remove: '<p>' | remove: '</p>' }}</div>
+    </li>
+  {%- endfor -%}
+</ol>

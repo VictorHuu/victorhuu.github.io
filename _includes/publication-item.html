@@ -1,0 +1,45 @@
+{%- assign pub = include.pub -%}
+{%- assign thumb = pub.thumbnail | default: "images/publications/placeholder.svg" -%}
+{%- assign bib_id = pub.title | slugify | append: '-bib' -%}
+
+<article class="ox-pub">
+  <div class="ox-pub__thumb">
+    <img src="{{ thumb }}" alt="{{ pub.title | escape }}" loading="lazy">
+    {% if pub.first_author %}<span class="ox-pub__first">★ First author</span>{% endif %}
+  </div>
+  <div class="ox-pub__body">
+    <h3 class="ox-pub__title">{{ pub.title }}</h3>
+    <div class="ox-pub__authors">{{ pub.authors | markdownify | remove: '<p>' | remove: '</p>' }}</div>
+    <div class="ox-pub__venue">
+      {% if pub.venue_short %}<span class="ox-pub__badge">{{ pub.venue_short }}</span>{% endif %}
+      <span class="ox-pub__venue-full">{{ pub.venue }}</span>
+    </div>
+    {% if pub.tags %}
+    <div class="ox-pub__tags">
+      {% for t in pub.tags %}<span class="ox-pub__tag">{{ t }}</span>{% endfor %}
+    </div>
+    {% endif %}
+    {% if pub.links and pub.links.size > 0 or pub.bibtex %}
+    <div class="ox-pub__links">
+      {% for link in pub.links %}
+        <a href="{{ link.url }}" class="ox-pub__link" target="_blank" rel="noopener">
+          <span class="ox-pub__link-text">{{ link.name }}</span>
+          <span class="ox-pub__link-arrow" aria-hidden="true">↗</span>
+        </a>
+      {% endfor %}
+      {% if pub.bibtex %}
+        <button class="ox-pub__link ox-pub__bib-toggle"
+                type="button"
+                aria-expanded="false"
+                data-bib-toggle="{{ bib_id }}">BibTeX</button>
+      {% endif %}
+    </div>
+    {% endif %}
+    {% if pub.bibtex %}
+    <div class="ox-pub__bib" id="{{ bib_id }}" hidden>
+      <button class="ox-pub__bib-copy" type="button" data-bib-copy="{{ bib_id }}-code">Copy</button>
+      <pre><code id="{{ bib_id }}-code">{{ pub.bibtex | strip }}</code></pre>
+    </div>
+    {% endif %}
+  </div>
+</article>

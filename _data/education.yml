@@ -1,0 +1,18 @@
+# Education entries — rendered as the .ox-edu card grid.
+# Each entry:
+#   dates        : "YYYY.MM – YYYY.MM" (or "Present")
+#   degree       : "MSc, Social Data Science"  (rendered Playfair, bold, Oxford Blue)
+#   institution  : "University of Oxford"      (rendered Georgia italic)
+#   honour       : optional gold chip, e.g. "First-class Honours"
+#   icon         : optional leading emoji, defaults to 🎓 in the include
+
+education:
+  - dates: "2025.09 – 2028.06(exp.)"
+    degree: "MSc, Software Engineering"
+    institution: "Tongji University"
+    icon: "🎓"
+
+  - dates: "2021.09 – 2025.07"
+    degree: "BEng, Software Engineering"
+    institution: "Tongji University"
+    icon: "🎓"

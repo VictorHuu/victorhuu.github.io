@@ -1,0 +1,30 @@
+publications:
+  - title: "Beyond Gene Reconstruction: Learning Cell Representations through Complementary Transcriptomic Views"
+    authors: "Jiaqi Xiong\\*, **Yuntao Hu\\***, Yu Zheng, Yifei Shi, Xinyue Guo, Jiaxin Qi"
+    venue: "Preprint"
+    venue_short: "Preprint"
+    date: "2026-08"
+    thumbnail: "images/publications/CoCoS.png"
+    first_author: true
+
+    tags:
+      - "Single-Cell"
+      - "Contrastive Learning"
+      - "Foundation Model"
+
+    links:
+      - name: "Paper"
+        url: "https://arxiv.org/abs/2608.00985"
+      - name: "PDF"
+        url: "https://arxiv.org/pdf/2608.00985"
+
+    bibtex: |
+      @misc{xiong2026genereconstructionlearningcell,
+        title         = {Beyond Gene Reconstruction: Learning Cell Representations through Complementary Transcriptomic Views},
+        author        = {Xiong, Jiaqi and Hu, Yuntao and Zheng, Yu and Shi, Yifei and Guo, Xinyue and Qi, Jiaxin},
+        year          = {2026},
+        eprint        = {2608.00985},
+        archivePrefix = {arXiv},
+        primaryClass  = {cs.LG},
+        url           = {https://arxiv.org/abs/2608.00985}
+      }

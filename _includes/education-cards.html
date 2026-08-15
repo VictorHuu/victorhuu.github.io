@@ -1,0 +1,20 @@
+{%- comment -%}
+  Education cards — 3-card responsive grid (auto-fit, minmax).
+  Reads from _data/education.yml.
+  Visual family with .ox-pub: gold left bar on hover, lift, surface bg.
+{%- endcomment -%}
+
+<ul class="ox-edu">
+  {%- for item in site.data.education.education -%}
+    {%- assign icon = item.icon | default: "🎓" -%}
+    <li class="ox-edu__card">
+      <span class="ox-edu__icon" aria-hidden="true">{{ icon }}</span>
+      <time class="ox-edu__dates">{{ item.dates }}</time>
+      <h3 class="ox-edu__degree">{{ item.degree }}</h3>
+      <p class="ox-edu__institution">{{ item.institution }}</p>
+      {%- if item.honour and item.honour != "" -%}
+        <span class="ox-edu__honour">{{ item.honour }}</span>
+      {%- endif -%}
+    </li>
+  {%- endfor -%}
+</ul>
