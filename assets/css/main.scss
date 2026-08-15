@@ -26,18 +26,18 @@
 @import "vendor/font-awesome/solid";
 @import "vendor/font-awesome/brands";
 
-/* Existing component system */
-@import "oxford";
-@import "topnav";
-@import "oxford-footer";
-@import "oxford-pubs";
-@import "oxford-timeline";
-@import "oxford-cards";
-@import "oxford-decor";
-@import "oxford-progress";
-@import "oxford-anim";
-@import "oxford-dark";
-@import "oxford-print";
+/* Tongji academic component system */
+@import "tongji-base";
+@import "tongji-nav";
+@import "tongji-footer";
+@import "tongji-pubs";
+@import "tongji-timeline";
+@import "tongji-cards";
+@import "tongji-decor";
+@import "tongji-progress";
+@import "tongji-anim";
+@import "tongji-dark";
+@import "tongji-print";
 
-/* Tongji visual layer — loaded last so it wins the cascade */
-@import "tongji";
+/* Final Tongji palette and visual refinements */
+@import "tongji-theme";
