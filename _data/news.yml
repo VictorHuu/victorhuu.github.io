@@ -1,2 +1,4 @@
 # News timeline entries — newest first.
 # Each entry: date (YYYY-MM string), text (markdown allowed; **bold** for venues).
+- date: "2026-08"
+  text: "🚀 My academic homepage is now online."
