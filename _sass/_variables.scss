@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Variables — Oxford Classic
+   Variables — Tongji Academic
    ========================================================================== */
 
 /* Fonts ------------------------------------------------------------------- */
@@ -12,7 +12,7 @@ $indent-var                : 0.5em;
 $serif                     : 'Source Serif Pro', Georgia, Times, serif;
 $sans-serif                : 'Inter', -apple-system, 'Helvetica Neue', Arial, sans-serif;
 $monospace                 : 'JetBrains Mono', Monaco, Consolas, monospace;
-$display                   : 'Playfair Display', 'Source Serif Pro', Georgia, serif;
+$display                   : 'Inter', -apple-system, 'Helvetica Neue', Arial, sans-serif;
 
 $sans-serif-narrow         : $sans-serif;
 $helvetica                 : $sans-serif;
@@ -36,64 +36,72 @@ $type-size-6               : 0.875em;
 $type-size-7               : 0.75em;
 $type-size-8               : 0.625em;
 
-/* Colors (Oxford Classic — Light) ---------------------------------------- */
-$oxford-blue               : #002147;
-$oxford-blue-deep          : #061027;
-$oxford-gold               : #c8a951;
-$parchment                 : #fbfaf7;
-$ink                       : #1a2236;
-$ink-muted                 : #6b6b6b;
-$ox-border                 : #e5e0d4;
-$ox-surface                : #ffffff;
+/* Colors (Tongji Academic — Light) ---------------------------------------- */
+$tongji-blue               : #0068b7;
+$tongji-blue-deep          : #004a80;
+$tongji-blue-light         : #55a9d9;
+$tongji-bg                 : #f7fafc;
+$ink                       : #173042;
+$ink-muted                 : #667987;
+$tongji-border             : #d7e4ed;
+$tongji-surface            : #ffffff;
 
-/* Legacy palette (kept for vendor compatibility; remapped to Oxford scheme) */
+/* Compatibility aliases for the existing ox-* component namespace. */
+$oxford-blue               : $tongji-blue;
+$oxford-blue-deep          : $tongji-blue-deep;
+$oxford-gold               : $tongji-blue-light;
+$parchment                 : $tongji-bg;
+$ox-border                 : $tongji-border;
+$ox-surface                : $tongji-surface;
+
+/* Legacy palette used by the base academicpages partials */
 $gray                      : $ink-muted;
 $dark-gray                 : $ink;
-$darker-gray               : $oxford-blue;
-$light-gray                : $ox-border;
-$lighter-gray              : $parchment;
+$darker-gray               : $tongji-blue;
+$light-gray                : $tongji-border;
+$lighter-gray              : $tongji-bg;
 
-$body-color                : $parchment;
-$background-color          : $parchment;
-$code-background-color     : mix($parchment, $oxford-gold, 92%);
-$code-background-color-dark: mix($parchment, $ink, 90%);
+$body-color                : $tongji-bg;
+$background-color          : $tongji-bg;
+$code-background-color     : mix($tongji-bg, $tongji-blue-light, 92%);
+$code-background-color-dark: mix($tongji-bg, $ink, 90%);
 $text-color                : $ink;
-$border-color              : $ox-border;
+$border-color              : $tongji-border;
 
-$primary-color             : $oxford-blue;
+$primary-color             : $tongji-blue;
 $success-color             : #3a8a3e;
 $warning-color             : #b3810d;
 $danger-color              : #a22c2c;
-$info-color                : $oxford-blue;
+$info-color                : $tongji-blue;
 
-/* Brand colors — keep (used by social icons) */
+/* Brand colors */
 $behance-color             : #1769FF;
 $dribbble-color            : #ea4c89;
 $facebook-color            : #3b5998;
 $flickr-color              : #ff0084;
 $foursquare-color          : #0072b1;
-$github-color              : $oxford-blue;
+$github-color              : $tongji-blue;
 $google-plus-color         : #dd4b39;
 $instagram-color           : #517fa4;
 $lastfm-color              : #d51007;
-$linkedin-color            : $oxford-blue;
+$linkedin-color            : $tongji-blue;
 $pinterest-color           : #cb2027;
 $rss-color                 : #fa9b39;
 $soundcloud-color          : #ff3300;
 $stackoverflow-color       : #fe7a15;
 $tumblr-color              : #32506d;
-$twitter-color             : $oxford-blue;
+$twitter-color             : $tongji-blue;
 $vimeo-color               : #1ab7ea;
 $vine-color                : #00bf8f;
 $youtube-color             : #bb0000;
 $xing-color                : #006567;
 
 /* Links */
-$link-color                : $oxford-blue;
-$link-color-hover          : $oxford-gold;
-$link-color-visited        : mix($oxford-blue, $ink, 60%);
-$masthead-link-color       : $oxford-gold;
-$masthead-link-color-hover : $parchment;
+$link-color                : $tongji-blue;
+$link-color-hover          : $tongji-blue-deep;
+$link-color-visited        : mix($tongji-blue, $ink, 60%);
+$masthead-link-color       : #ffffff;
+$masthead-link-color-hover : #dff3ff;
 
 /* Breakpoints ------------------------------------------------------------- */
 @include breakpoint-set("to ems", true);
@@ -104,7 +112,7 @@ $medium-wide               : 900px  !default;
 $large                     : 925px  !default;
 $x-large                   : 1280px !default;
 
-/* Grid (retain for any remaining susy usage; we don't rely on it) --------- */
+/* Grid -------------------------------------------------------------------- */
 $right-sidebar-width-narrow: 0px;
 $right-sidebar-width       : 0px;
 $right-sidebar-width-wide  : 0px;
@@ -125,12 +133,12 @@ $border-radius             : 4px;
 $radius-sm                 : 3px;
 $radius-md                 : 6px;
 $radius-pill               : 999px;
-$box-shadow                : 0 1px 2px rgba(0, 33, 71, 0.06);
-$box-shadow-hover          : 0 6px 14px rgba(0, 33, 71, 0.10);
+$box-shadow                : 0 1px 2px rgba(0, 74, 128, 0.06);
+$box-shadow-hover          : 0 6px 14px rgba(0, 74, 128, 0.12);
 $navicon-width             : 28px;
 $navicon-height            : 4px;
 $global-transition         : all 0.2s ease-out;
 
-/* Oxford-specific layout */
+/* Tongji-specific layout */
 $page-max                  : 760px;
 $topnav-height             : 52px;
