@@ -1,0 +1,555 @@
+/* ==========================================================================
+   Tongji Academic — visual override layer
+   Keeps the existing ox-* component structure and interaction logic intact.
+   Palette: Tongji blue + white + cool blue-gray.
+   ========================================================================== */
+
+:root {
+  --tj-blue:        #0068b7;
+  --tj-blue-deep:   #004a80;
+  --tj-blue-light:  #55a9d9;
+  --tj-sky:         #eaf5fb;
+  --tj-bg:          #f7fafc;
+  --tj-surface:     #ffffff;
+  --tj-text:        #173042;
+  --tj-muted:       #667987;
+  --tj-border:      #d7e4ed;
+
+  --ox-bg:          var(--tj-bg);
+  --ox-surface:     var(--tj-surface);
+  --ox-nav-bg:      var(--tj-blue);
+  --ox-text:        var(--tj-text);
+  --ox-text-muted:  var(--tj-muted);
+  --ox-border:      var(--tj-border);
+  --ox-primary:     var(--tj-blue);
+  --ox-gold:        var(--tj-blue-light);
+  --ox-link:        var(--tj-blue);
+  --ox-link-hover:  var(--tj-blue-deep);
+}
+
+/* Base -------------------------------------------------------------------- */
+html,
+body {
+  background: var(--ox-bg);
+}
+
+body {
+  color: var(--ox-text);
+  background:
+    radial-gradient(rgba(0, 104, 183, 0.055) 1px, transparent 1px) 0 0 / 18px 18px,
+    linear-gradient(180deg, #fbfdff 0%, var(--ox-bg) 42%, #f3f8fb 100%);
+}
+
+h1, h2, h3, h4, h5, h6,
+.ox-sidebar__name,
+.ox-about-header__name,
+.ox-pub__title,
+.ox-edu__degree,
+.ox-honors__heading,
+.ox-honors__title {
+  font-family: $sans-serif;
+  color: var(--ox-primary);
+}
+
+.page__content > h1 {
+  gap: 11px;
+  color: var(--ox-primary);
+  letter-spacing: -0.015em;
+}
+
+.page__content > h1::before {
+  content: "";
+  flex: 0 0 4px;
+  width: 4px;
+  height: 1.05em;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--tj-blue), var(--tj-blue-light));
+  opacity: 1;
+}
+
+.page__content > h1::after {
+  background: linear-gradient(90deg, rgba(0, 104, 183, 0.42), rgba(0, 104, 183, 0.03));
+  opacity: 1;
+}
+
+.page__content strong,
+.page__content b {
+  color: var(--tj-blue-deep);
+}
+
+.page__content a {
+  color: var(--tj-blue);
+  background-image: linear-gradient(rgba(0, 104, 183, 0.32), rgba(0, 104, 183, 0.32));
+}
+
+.page__content a:hover {
+  color: var(--tj-blue-deep);
+  background-image: linear-gradient(var(--tj-blue), var(--tj-blue));
+}
+
+/* Top navigation ---------------------------------------------------------- */
+.ox-topnav {
+  background: linear-gradient(90deg, var(--tj-blue-deep), var(--tj-blue));
+  border-bottom-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 2px 12px rgba(0, 74, 128, 0.16);
+}
+
+.ox-topnav[data-scrolled="true"] {
+  background: rgba(0, 82, 145, 0.88);
+  border-color: rgba(255, 255, 255, 0.24);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 10px 28px rgba(0, 74, 128, 0.22),
+    0 2px 8px rgba(0, 74, 128, 0.12);
+}
+
+.ox-topnav__logo {
+  font-family: $sans-serif;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.04em;
+}
+
+.ox-topnav__logo:hover {
+  color: #dff3ff;
+}
+
+.ox-topnav__links a {
+  color: rgba(255, 255, 255, 0.82);
+  font-weight: 600;
+}
+
+.ox-topnav__links a:hover,
+.ox-topnav__links a[data-active="true"] {
+  color: #fff;
+}
+
+.ox-topnav__links a::after,
+.ox-topnav__links a[data-active="true"]::after {
+  background: #fff;
+}
+
+.ox-topnav__burger span {
+  background: #fff;
+}
+
+.ox-theme-toggle {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.ox-theme-toggle:hover {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+@include breakpoint(max-width $small) {
+  .ox-topnav__links {
+    background: var(--tj-blue-deep);
+    border-bottom-color: rgba(255, 255, 255, 0.2);
+  }
+  .ox-topnav__links li {
+    border-top-color: rgba(255, 255, 255, 0.12);
+  }
+}
+
+/* Sidebar ----------------------------------------------------------------- */
+.ox-sidebar {
+  background: rgba(255, 255, 255, 0.96);
+  border-color: var(--tj-border);
+  border-top: 3px solid var(--tj-blue);
+  border-radius: 8px;
+  box-shadow: 0 8px 28px rgba(0, 82, 145, 0.07);
+}
+
+.ox-sidebar__avatar,
+.ox-about-header__avatar {
+  border-color: var(--tj-blue);
+  background: var(--tj-blue);
+  box-shadow: 0 0 0 0 rgba(0, 104, 183, 0.25);
+}
+
+.ox-sidebar__avatar:hover,
+.ox-about-header__avatar:hover {
+  box-shadow:
+    0 0 0 6px rgba(0, 104, 183, 0.10),
+    0 12px 28px rgba(0, 74, 128, 0.16);
+}
+
+.ox-sidebar__name {
+  background: linear-gradient(110deg, var(--tj-blue-deep) 0%, var(--tj-blue) 58%, var(--tj-blue-light) 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.ox-sidebar__zh {
+  color: var(--tj-muted);
+}
+
+.ox-sidebar__bio,
+.ox-sidebar__social,
+.ox-sidebar__globe,
+.ox-sidebar__location {
+  border-color: var(--tj-border);
+}
+
+.ox-sidebar__social a i,
+.ox-sidebar__location i {
+  color: var(--tj-blue);
+}
+
+.ox-sidebar__social a:hover {
+  background: linear-gradient(90deg, rgba(0, 104, 183, 0.10), rgba(85, 169, 217, 0.04));
+  color: var(--tj-blue-deep);
+}
+
+.ox-sidebar__social a:hover i {
+  color: var(--tj-blue-deep);
+}
+
+/* Highlight + research chips --------------------------------------------- */
+.ox-mark {
+  background: linear-gradient(transparent 60%, rgba(85, 169, 217, 0.30) 60%);
+}
+
+.ox-chip {
+  color: var(--tj-blue);
+  border-color: rgba(0, 104, 183, 0.62);
+  background: rgba(255, 255, 255, 0.60);
+}
+
+.ox-chip::before {
+  background: linear-gradient(90deg, var(--tj-blue-deep), var(--tj-blue));
+}
+
+.ox-chip:hover {
+  color: #fff;
+  border-color: var(--tj-blue);
+}
+
+/* Cards ------------------------------------------------------------------- */
+.ox-pub,
+.ox-edu__card,
+.ox-honors__card {
+  border-color: var(--tj-border);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 82, 145, 0.035);
+}
+
+.ox-pub::before,
+.ox-edu__card::before,
+.ox-honors__card::before {
+  background: linear-gradient(180deg, var(--tj-blue), var(--tj-blue-light));
+}
+
+.ox-pub:hover,
+.ox-edu__card:hover,
+.ox-honors__card:hover {
+  border-color: rgba(0, 104, 183, 0.38);
+  box-shadow:
+    0 2px 6px rgba(0, 82, 145, 0.05),
+    0 12px 30px rgba(0, 82, 145, 0.11);
+}
+
+.ox-pub__thumb {
+  border-color: var(--tj-border);
+  background: linear-gradient(135deg, #f5faff 0%, #e8f3fa 100%);
+}
+
+.ox-pub:hover .ox-pub__title {
+  color: var(--tj-blue-deep);
+}
+
+.ox-pub__badge,
+.ox-edu__honour {
+  color: #fff;
+  background: var(--tj-blue);
+  box-shadow: 0 2px 6px rgba(0, 82, 145, 0.16);
+}
+
+.ox-pub:hover .ox-pub__badge {
+  box-shadow: 0 5px 12px rgba(0, 82, 145, 0.22);
+}
+
+.ox-pub__first {
+  color: var(--tj-blue-deep);
+  background: #dff2fc;
+  border: 1px solid rgba(0, 104, 183, 0.24);
+  box-shadow: 0 2px 6px rgba(0, 82, 145, 0.12);
+}
+
+.ox-pub__tag {
+  color: var(--tj-blue-deep);
+  background: rgba(0, 104, 183, 0.09);
+}
+
+.ox-pub:hover .ox-pub__tag {
+  color: var(--tj-blue-deep);
+  background: rgba(0, 104, 183, 0.16);
+}
+
+.ox-pub__link {
+  color: var(--tj-blue);
+  border-color: rgba(0, 104, 183, 0.26);
+}
+
+.ox-pub__link::before {
+  background: var(--tj-blue);
+}
+
+.ox-pub__link:hover,
+.ox-pub__bib-toggle[aria-expanded="true"] {
+  color: #fff;
+  border-color: var(--tj-blue);
+}
+
+.ox-pub__bib {
+  background: linear-gradient(180deg, rgba(0, 104, 183, 0.045), rgba(85, 169, 217, 0.025));
+  border-color: var(--tj-border);
+  border-left-color: var(--tj-blue);
+}
+
+.ox-pub__bib-copy {
+  color: var(--tj-blue);
+}
+
+.ox-pub__bib-copy:hover,
+.ox-pub__bib-copy[data-copied="true"] {
+  color: #fff;
+  background: var(--tj-blue);
+  border-color: var(--tj-blue);
+}
+
+/* Timeline ---------------------------------------------------------------- */
+.ox-timeline::before {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 104, 183, 0) 0%,
+    var(--tj-blue-light) 8%,
+    var(--tj-blue) 50%,
+    var(--tj-blue-light) 92%,
+    rgba(0, 104, 183, 0) 100%
+  );
+}
+
+.ox-timeline__dot {
+  background: var(--tj-blue);
+}
+
+.ox-timeline__item:hover .ox-timeline__dot {
+  box-shadow:
+    0 0 0 2px var(--ox-bg),
+    0 0 0 6px rgba(0, 104, 183, 0.16);
+}
+
+.ox-timeline__item:hover .ox-timeline__text,
+.ox-timeline__item:hover .ox-timeline__date {
+  color: var(--tj-blue-deep);
+}
+
+/* Callouts ---------------------------------------------------------------- */
+.ox-callout {
+  border-color: var(--tj-border);
+  border-left-color: var(--tj-blue);
+  background: linear-gradient(180deg, rgba(0, 104, 183, 0.055), rgba(0, 104, 183, 0.018));
+}
+
+.ox-callout__label {
+  color: var(--tj-blue);
+}
+
+/* Decorative motion ------------------------------------------------------- */
+.ox-mount-veil {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 104, 183, 0) 10%,
+    var(--tj-blue-light) 50%,
+    rgba(0, 104, 183, 0) 90%,
+    transparent 100%
+  );
+}
+
+.ox-progress {
+  background: linear-gradient(90deg, var(--tj-blue-light), var(--tj-blue));
+}
+
+.ox-to-top {
+  border-color: var(--tj-blue);
+  background: var(--tj-blue);
+  color: #fff;
+  box-shadow: 0 5px 16px rgba(0, 82, 145, 0.20);
+}
+
+.ox-to-top:hover,
+.ox-to-top:focus-visible {
+  background: var(--tj-blue-deep);
+  color: #fff;
+  outline-color: var(--tj-blue-light);
+  box-shadow: 0 9px 24px rgba(0, 82, 145, 0.25);
+}
+
+/* Footer ------------------------------------------------------------------ */
+.ox-footer {
+  background: rgba(255, 255, 255, 0.58);
+  border-top: 2px solid rgba(0, 104, 183, 0.18);
+}
+
+.ox-footer__social a {
+  color: var(--tj-blue);
+}
+
+.ox-footer__social a:hover {
+  color: var(--tj-blue-deep);
+}
+
+/* Dark mode --------------------------------------------------------------- */
+html[data-theme="dark"] {
+  --ox-bg:         #071722;
+  --ox-surface:    #0d2231;
+  --ox-nav-bg:     #004a80;
+  --ox-text:       #e8f1f6;
+  --ox-text-muted: #9bb1bf;
+  --ox-border:     #1d4057;
+  --ox-primary:    #68bce7;
+  --ox-gold:       #68bce7;
+  --ox-link:       #7cc9ed;
+  --ox-link-hover: #ffffff;
+}
+
+html[data-theme="dark"] body {
+  background:
+    radial-gradient(rgba(104, 188, 231, 0.075) 1px, transparent 1px) 0 0 / 18px 18px,
+    linear-gradient(180deg, #071722 0%, #091b29 100%);
+}
+
+html[data-theme="dark"] .ox-topnav,
+html[data-theme="dark"] .ox-topnav[data-scrolled="true"] {
+  background: rgba(0, 74, 128, 0.90);
+  border-color: rgba(104, 188, 231, 0.25);
+}
+
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] .page__content > h1,
+html[data-theme="dark"] .ox-about-header__name,
+html[data-theme="dark"] .ox-pub__title,
+html[data-theme="dark"] .ox-edu__degree,
+html[data-theme="dark"] .ox-honors__title,
+html[data-theme="dark"] .ox-honors__heading {
+  color: var(--ox-primary);
+}
+
+html[data-theme="dark"] .page__content strong,
+html[data-theme="dark"] .page__content b {
+  color: #9ed7f2;
+}
+
+html[data-theme="dark"] .ox-sidebar {
+  background: rgba(13, 34, 49, 0.96);
+  border-color: var(--ox-border);
+  border-top-color: var(--ox-primary);
+}
+
+html[data-theme="dark"] .ox-sidebar__name {
+  background: linear-gradient(110deg, #eaf7ff 0%, #8dd1f1 48%, #55a9d9 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+html[data-theme="dark"] .ox-chip {
+  color: #9ed7f2;
+  border-color: rgba(104, 188, 231, 0.52);
+  background: rgba(104, 188, 231, 0.035);
+}
+
+html[data-theme="dark"] .ox-chip:hover {
+  color: #071722;
+  background: #8dd1f1;
+  border-color: #8dd1f1;
+}
+
+html[data-theme="dark"] .ox-mark {
+  background: linear-gradient(transparent 60%, rgba(85, 169, 217, 0.35) 60%);
+}
+
+html[data-theme="dark"] .ox-pub:hover,
+html[data-theme="dark"] .ox-edu__card:hover,
+html[data-theme="dark"] .ox-honors__card:hover {
+  border-color: rgba(104, 188, 231, 0.42);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.34);
+}
+
+html[data-theme="dark"] .ox-pub__badge,
+html[data-theme="dark"] .ox-edu__honour {
+  color: #071722;
+  background: #8dd1f1;
+}
+
+html[data-theme="dark"] .ox-pub__first {
+  color: #071722;
+  background: #8dd1f1;
+  border-color: transparent;
+}
+
+html[data-theme="dark"] .ox-pub__tag {
+  color: #9ed7f2;
+  background: rgba(104, 188, 231, 0.10);
+}
+
+html[data-theme="dark"] .ox-pub:hover .ox-pub__tag {
+  color: #dff5ff;
+  background: rgba(104, 188, 231, 0.18);
+}
+
+html[data-theme="dark"] .ox-pub__link {
+  color: #9ed7f2;
+  border-color: var(--ox-border);
+}
+
+html[data-theme="dark"] .ox-pub__link:hover,
+html[data-theme="dark"] .ox-pub__bib-toggle[aria-expanded="true"] {
+  color: #071722;
+  background: #8dd1f1;
+  border-color: #8dd1f1;
+}
+
+html[data-theme="dark"] .ox-pub__link:hover::before,
+html[data-theme="dark"] .ox-pub__bib-toggle[aria-expanded="true"]::before {
+  background: #8dd1f1;
+}
+
+html[data-theme="dark"] .ox-timeline__item:hover .ox-timeline__dot {
+  box-shadow:
+    0 0 0 2px var(--ox-bg),
+    0 0 0 6px rgba(104, 188, 231, 0.22);
+}
+
+html[data-theme="dark"] .ox-timeline__item:hover .ox-timeline__text,
+html[data-theme="dark"] .ox-timeline__item:hover .ox-timeline__date {
+  color: #9ed7f2;
+}
+
+html[data-theme="dark"] .ox-to-top {
+  background: #0d2231;
+  color: #8dd1f1;
+  border-color: #68bce7;
+}
+
+html[data-theme="dark"] .ox-to-top:hover,
+html[data-theme="dark"] .ox-to-top:focus-visible {
+  background: #68bce7;
+  color: #071722;
+}
+
+html[data-theme="dark"] .ox-footer {
+  background: rgba(7, 23, 34, 0.72);
+  border-top-color: rgba(104, 188, 231, 0.20);
+}
