@@ -8,7 +8,7 @@
 # ============================================================
 
 title                    : "Yuntao Hu"
-description              : "Yuntao Hu — Graduate at Tongji University"
+description              : "Yuntao Hu — Graduate Student at Tongji University"
 
 # GitHub repository
 repository               : "VictorHuu/victorhuu.github.io"
@@ -54,7 +54,7 @@ author:
   # Path relative to site root.
   avatar           : "images/avator.jpg"
 
-  bio              : "Agentic RL · Biological Foundational Model"
+  bio              : "Agentic RL · Biological Foundational Models"
 
   location         : "Shanghai, China"
 
