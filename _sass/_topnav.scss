@@ -1,0 +1,208 @@
+/* ==========================================================================
+   Topnav — Oxford Classic
+   ========================================================================== */
+
+.ox-topnav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: $topnav-height;
+  background: var(--ox-nav-bg);
+  border: 1px solid transparent;
+  border-bottom-color: var(--ox-gold);
+  border-radius: 0;
+  z-index: 100;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.08);
+  transition:
+    background 0.3s ease-out,
+    box-shadow 0.4s ease-out,
+    backdrop-filter 0.3s ease-out,
+    border-radius 0.4s cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 0.3s ease-out,
+    height 0.3s ease-out,
+    top 0.4s cubic-bezier(0.2, 0.7, 0.2, 1),
+    left 0.4s cubic-bezier(0.2, 0.7, 0.2, 1),
+    right 0.4s cubic-bezier(0.2, 0.7, 0.2, 1),
+    width 0.4s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* Scrolled state: floating capsule */
+.ox-topnav[data-scrolled="true"] {
+  background: rgba(0, 33, 71, 0.74);
+  backdrop-filter: saturate(150%) blur(14px);
+  -webkit-backdrop-filter: saturate(150%) blur(14px);
+  border: 1px solid rgba(200, 169, 81, 0.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 8px 28px rgba(0, 33, 71, 0.30),
+    0 2px 8px rgba(0, 33, 71, 0.18);
+
+  @include breakpoint(min-width 720px) {
+    top: 12px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: min(1100px, calc(100% - 32px));
+    height: 48px;
+    border-radius: 999px;
+  }
+}
+
+/* When floating, shrink the inner gutter so links don't drift apart */
+@include breakpoint(min-width 720px) {
+  .ox-topnav[data-scrolled="true"] .ox-topnav__inner {
+    padding: 0 28px;
+  }
+}
+
+.ox-topnav__inner {
+  max-width: 1600px;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 64px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ox-topnav__logo {
+  font-family: $display;
+  font-size: 1.05rem;
+  color: $parchment;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  background-image: none !important;
+  padding: 0;
+}
+
+.ox-topnav__logo:hover { color: $oxford-gold; }
+
+.ox-topnav__nav {
+  display: flex;
+  align-items: center;
+}
+
+.ox-topnav__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.ox-topnav__links li { margin: 0; padding: 0; }
+
+.ox-topnav__links a {
+  font-family: $sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: $oxford-gold;
+  text-decoration: none;
+  padding: 6px 2px;
+  position: relative;
+  background-image: none !important;
+  transition: color 0.2s ease-out;
+}
+
+.ox-topnav__links a::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 0;
+  height: 1px;
+  background: $parchment;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s ease-out;
+}
+
+.ox-topnav__links a:hover {
+  color: $parchment;
+}
+.ox-topnav__links a:hover::after { transform: scaleX(1); }
+
+/* Active section indicator (set by IntersectionObserver in scripts.html) */
+.ox-topnav__links a[data-active="true"] {
+  color: $parchment;
+}
+.ox-topnav__links a[data-active="true"]::after {
+  transform: scaleX(1);
+  background: var(--ox-gold);
+  height: 1.5px;
+}
+
+/* --- Mobile hamburger --------------------------------------------------- */
+.ox-topnav__burger {
+  display: none;
+  background: transparent;
+  border: 0;
+  padding: 8px;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 4px;
+}
+.ox-topnav__burger span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: $oxford-gold;
+  transition: transform 0.2s ease-out;
+}
+
+@include breakpoint(max-width $small) {
+  .ox-topnav__burger { display: flex; }
+
+  .ox-topnav__links {
+    position: absolute;
+    top: $topnav-height;
+    left: 0; right: 0;
+    background: var(--ox-nav-bg);
+    flex-direction: column;
+    gap: 0;
+    padding: 8px 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease-out;
+    border-bottom: 1px solid $oxford-gold;
+  }
+  .ox-topnav[data-open="true"] .ox-topnav__links {
+    max-height: 280px;
+  }
+  .ox-topnav__links li {
+    border-top: 1px solid rgba(200,169,81,0.15);
+  }
+  .ox-topnav__links a {
+    display: block;
+    padding: 12px 24px;
+  }
+}
+
+/* Dark-mode toggle button sits in the nav */
+.ox-theme-toggle {
+  background: transparent;
+  border: 1px solid rgba(200,169,81,0.3);
+  border-radius: 4px;
+  color: $oxford-gold;
+  width: 30px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.2s ease-out;
+}
+.ox-theme-toggle:hover {
+  border-color: $oxford-gold;
+  background: rgba(200,169,81,0.12);
+}
+.ox-theme-toggle__icon {
+  font-size: 13px;
+  line-height: 1;
+}

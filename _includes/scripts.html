@@ -1,4 +1,279 @@
 <script src="assets/js/main.min.js"></script>
+<script src="assets/js/darkmode.js" defer></script>
 
 {% include analytics.html %}
-{% include fetch_google_scholar_stats.html %}
+
+<script>
+  // Mobile nav toggle
+  (function () {
+    var burger = document.querySelector('.ox-topnav__burger');
+    var nav    = document.querySelector('.ox-topnav');
+    if (!burger || !nav) return;
+    burger.addEventListener('click', function () {
+      var open = nav.getAttribute('data-open') === 'true';
+      nav.setAttribute('data-open', !open);
+      burger.setAttribute('aria-expanded', !open);
+    });
+  })();
+
+  // Topnav: add blurred/translucent style once the page is scrolled
+  (function () {
+    var nav = document.querySelector('.ox-topnav');
+    if (!nav) return;
+    var ticking = false;
+    function update() {
+      var scrolled = (window.scrollY || document.documentElement.scrollTop) > 12;
+      nav.setAttribute('data-scrolled', scrolled ? 'true' : 'false');
+      ticking = false;
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
+    update();
+  })();
+
+  // BibTeX: expand/collapse + copy
+  (function () {
+    document.addEventListener('click', function (e) {
+      var toggle = e.target.closest('[data-bib-toggle]');
+      if (toggle) {
+        var panel = document.getElementById(toggle.dataset.bibToggle);
+        if (!panel) return;
+        var isOpen = !panel.hasAttribute('hidden');
+        if (isOpen) {
+          panel.setAttribute('hidden', '');
+          toggle.setAttribute('aria-expanded', 'false');
+        } else {
+          panel.removeAttribute('hidden');
+          toggle.setAttribute('aria-expanded', 'true');
+        }
+        return;
+      }
+      var copy = e.target.closest('[data-bib-copy]');
+      if (copy) {
+        var code = document.getElementById(copy.dataset.bibCopy);
+        if (!code) return;
+        var text = code.textContent;
+        var done = function () {
+          var orig = copy.textContent;
+          copy.textContent = 'Copied';
+          copy.setAttribute('data-copied', 'true');
+          setTimeout(function () {
+            copy.textContent = orig;
+            copy.removeAttribute('data-copied');
+          }, 1400);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done, function () {
+            // fallback below
+            fallbackCopy(text); done();
+          });
+        } else {
+          fallbackCopy(text); done();
+        }
+      }
+    });
+    function fallbackCopy(text) {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+  })();
+
+  // Scroll reveal + active-nav indicator (IntersectionObserver)
+  (function () {
+    if (!('IntersectionObserver' in window)) return;
+
+    var prefersReduced = window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function onReady(fn) {
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', fn);
+      } else {
+        fn();
+      }
+    }
+
+    onReady(function () {
+      // ---- 1) Reveal-on-scroll ------------------------------------------
+      var revealSelectors = [
+        '.page__content > h1',
+        '.page__content > p',
+        '.ox-callout',
+        '.ox-pub',
+        '.ox-chips'
+      ];
+      var revealEls = document.querySelectorAll(revealSelectors.join(','));
+      Array.prototype.forEach.call(revealEls, function (el, i) {
+        el.classList.add('ox-reveal');
+        // small stagger for adjacent items
+        el.style.transitionDelay = (Math.min(i, 6) * 0.05) + 's';
+      });
+
+      if (prefersReduced) {
+        // Skip motion entirely; mark everything visible immediately.
+        Array.prototype.forEach.call(revealEls, function (el) {
+          el.classList.add('ox-reveal--visible');
+        });
+      } else {
+        var revealObserver = new IntersectionObserver(function (entries, obs) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('ox-reveal--visible');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15 });
+
+        Array.prototype.forEach.call(revealEls, function (el) {
+          revealObserver.observe(el);
+        });
+      }
+
+      // ---- 2) Active-nav indicator --------------------------------------
+      // Map heading IDs to nav <a href="..."> values
+      var navMap = {
+        'about-me':      '/#about-me',
+        '-publications': '/#-publications',
+        '-contact':      '/#-contact'
+      };
+
+      var navLinks = {};
+      Object.keys(navMap).forEach(function (id) {
+        var href = navMap[id];
+        var a = document.querySelector('.ox-topnav__links a[href="' + href + '"]');
+        if (a) navLinks[id] = a;
+      });
+
+      var sections = [];
+      Object.keys(navMap).forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el && navLinks[id]) sections.push(el);
+      });
+
+      if (sections.length === 0) return;
+
+      function clearActive() {
+        Object.keys(navLinks).forEach(function (id) {
+          navLinks[id].removeAttribute('data-active');
+        });
+      }
+
+      var visibleIds = {};
+      var activeObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            visibleIds[entry.target.id] = true;
+          } else {
+            delete visibleIds[entry.target.id];
+          }
+        });
+
+        // Pick the first section (in document order) that is currently in
+        // the active band. Only one active at a time.
+        clearActive();
+        for (var i = 0; i < sections.length; i++) {
+          var sid = sections[i].id;
+          if (visibleIds[sid]) {
+            navLinks[sid].setAttribute('data-active', 'true');
+            break;
+          }
+        }
+      }, {
+        // Active section = the one near the middle of the viewport
+        rootMargin: '-40% 0px -50% 0px',
+        threshold: 0
+      });
+
+      sections.forEach(function (s) { activeObserver.observe(s); });
+    });
+  })();
+
+  // Scroll progress bar (top of page) — rAF-throttled
+  (function () {
+    var bar = document.querySelector('.ox-progress');
+    if (!bar) return;
+    var ticking = false;
+    function update() {
+      var doc = document.documentElement;
+      var scrollTop = window.scrollY || doc.scrollTop || 0;
+      var height = (doc.scrollHeight || document.body.scrollHeight) - (doc.clientHeight || window.innerHeight);
+      var ratio = height > 0 ? Math.min(Math.max(scrollTop / height, 0), 1) : 0;
+      bar.style.transform = 'scaleX(' + ratio + ')';
+      ticking = false;
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
+    window.addEventListener('resize', function () {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
+    update();
+  })();
+
+  // Back-to-top button: appear after 800px scroll, smooth-scroll to top on click
+  (function () {
+    var btn = document.querySelector('.ox-to-top');
+    if (!btn) return;
+    var ticking = false;
+    var threshold = 800;
+    function update() {
+      var scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
+      btn.setAttribute('data-visible', scrollTop > threshold ? 'true' : 'false');
+      ticking = false;
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
+    btn.addEventListener('click', function () {
+      var prefersReduced = window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      try {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: prefersReduced ? 'auto' : 'smooth'
+        });
+      } catch (e) {
+        window.scrollTo(0, 0);
+      }
+    });
+    update();
+  })();
+
+  // Page-mount sweep trigger: add `js-loaded` class on body to fire CSS animation once.
+  (function () {
+    var prefersReduced = window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return; // CSS also guards, but skip the class entirely.
+    function fire() {
+      // Use rAF to ensure the CSS has settled before kicking off animation.
+      window.requestAnimationFrame(function () {
+        document.body.classList.add('js-loaded');
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', fire);
+    } else {
+      fire();
+    }
+  })();
+</script>

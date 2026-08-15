@@ -1,0 +1,508 @@
+/* ==========================================================================
+   Oxford Classic — core overrides
+   Loaded AFTER academicpages partials so cascade wins.
+   ========================================================================== */
+
+/* CSS custom properties for theme switching ------------------------------ */
+:root {
+  --ox-bg:          #{$parchment};
+  --ox-surface:     #{$ox-surface};
+  --ox-nav-bg:      #{$oxford-blue};
+  --ox-text:        #{$ink};
+  --ox-text-muted:  #{$ink-muted};
+  --ox-border:      #{$ox-border};
+  --ox-primary:     #{$oxford-blue};
+  --ox-gold:        #{$oxford-gold};
+  --ox-link:        #{$oxford-blue};
+  --ox-link-hover:  #{$oxford-gold};
+}
+
+/* --- Reset old academic-pages layout --------------------------------- */
+html {
+  font-size: 16px;
+  background: var(--ox-bg);
+}
+
+body {
+  background: var(--ox-bg);
+  color: var(--ox-text);
+  font-family: $serif;
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Two-column grid: sticky sidebar + fluid content — all fluid via clamp() */
+#main {
+  max-width: 1600px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  padding: 32px clamp(20px, 4vw, 64px) 56px !important;
+  animation: none;
+  display: grid;
+  grid-template-columns: clamp(240px, 18vw, 300px) minmax(0, 1fr);
+  gap: clamp(32px, 4.5vw, 80px);
+  align-items: start;
+}
+
+/* All content blocks share the same width — no per-element measure */
+
+.page {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  float: none !important;
+  min-width: 0;
+}
+
+.page__inner-wrap,
+.page__content {
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+#page-body { padding-top: $topnav-height; }
+
+/* --- Oxford Sidebar ---------------------------------------------------- */
+.sidebar {
+  display: block !important;
+  width: auto !important;
+  float: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  opacity: 1 !important;
+  font-size: 1rem !important;
+
+  &.sticky {
+    position: sticky;
+    top: calc(#{$topnav-height} + 20px);
+    height: fit-content;
+    max-height: none;
+    overflow: visible;
+  }
+}
+
+.ox-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px 14px;
+  background: var(--ox-surface);
+  border: 1px solid var(--ox-border);
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgba(0, 33, 71, 0.04);
+}
+
+.ox-sidebar__avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px solid var(--ox-gold);
+  object-fit: cover;
+  margin-bottom: 14px;
+  background: var(--ox-primary);
+  box-shadow: 0 0 0 0 rgba(200, 169, 81, 0.55);
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.4s ease-out;
+  cursor: zoom-in;
+}
+
+.ox-sidebar__avatar:hover {
+  transform: scale(1.04) rotate(-1deg);
+  box-shadow: 0 0 0 6px rgba(200, 169, 81, 0.18), 0 10px 24px rgba(0, 33, 71, 0.2);
+}
+
+.ox-sidebar__name {
+  font-family: $display;
+  color: var(--ox-primary);
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 2px;
+  letter-spacing: -0.01em;
+}
+
+.ox-sidebar__zh {
+  font-family: $display;
+  color: var(--ox-text-muted);
+  font-size: 1.1rem;
+  margin: 0 0 12px;
+  letter-spacing: 0.04em;
+}
+
+.ox-sidebar__role {
+  font-family: $sans-serif;
+  font-size: 0.9rem;
+  color: var(--ox-text);
+  line-height: 1.45;
+  margin: 0 0 12px;
+}
+
+.ox-sidebar__affil {
+  color: var(--ox-text-muted);
+  font-style: italic;
+}
+
+.ox-sidebar__citations {
+  margin: 0 0 12px;
+}
+.ox-sidebar__citations img {
+  height: 20px;
+  vertical-align: middle;
+}
+
+.ox-sidebar__bio {
+  font-size: 0.93rem;
+  color: var(--ox-text-muted);
+  line-height: 1.5;
+  margin: 0 0 14px;
+  padding: 10px 4px 0;
+  border-top: 1px dashed var(--ox-border);
+  width: 100%;
+}
+
+.ox-sidebar__social {
+  list-style: none;
+  padding: 10px 0 6px;
+  margin: 0;
+  width: 100%;
+  border-top: 1px dashed var(--ox-border);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ox-sidebar__social li { margin: 0; padding: 0; }
+
+.ox-sidebar__social a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  border-radius: 6px;
+  font-family: $sans-serif;
+  font-size: 0.9rem;
+  color: var(--ox-text);
+  text-decoration: none;
+  background-image: none !important;
+  transition: background 0.2s ease-out, color 0.2s ease-out, transform 0.2s ease-out;
+}
+
+.ox-sidebar__social a i,
+.ox-sidebar__social a img {
+  width: 18px;
+  font-size: 1rem;
+  color: var(--ox-primary);
+  text-align: center;
+  flex-shrink: 0;
+  transition: color 0.2s ease-out, transform 0.2s ease-out;
+}
+
+.ox-sidebar__rednote-icon {
+  height: 16px;
+  width: 16px;
+  object-fit: contain;
+  transition: transform 0.2s ease-out;
+}
+
+.ox-sidebar__social a:hover {
+  background: linear-gradient(90deg, rgba(200, 169, 81, 0.12), rgba(0, 33, 71, 0.04));
+  color: var(--ox-primary);
+  transform: translateX(3px);
+}
+
+.ox-sidebar__social a:hover i {
+  color: var(--ox-gold);
+  transform: scale(1.12);
+}
+
+.ox-sidebar__social a:hover .ox-sidebar__rednote-icon {
+  transform: scale(1.12);
+}
+
+/* --- Sidebar ClustrMaps globe ----------------------------------------- */
+.ox-sidebar__globe {
+  width: 100%;
+  padding: 14px 0 6px;
+  margin-top: 10px;
+  border-top: 1px dashed var(--ox-border);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.92;
+  transition: opacity 0.25s ease-out;
+  overflow: visible;
+}
+.ox-sidebar__globe:hover { opacity: 1; }
+/* Let ClustrMaps render at its native 200x200 — scaling a canvas via CSS
+   blurs it. Only constrain to never exceed the sidebar. */
+.ox-sidebar__globe > * {
+  max-width: 100%;
+  height: auto;
+}
+
+.ox-sidebar__location {
+  font-family: $sans-serif;
+  font-size: 0.78rem;
+  color: var(--ox-text-muted);
+  margin: 10px 0 0;
+  padding: 10px 0 0;
+  width: 100%;
+  border-top: 1px dashed var(--ox-border);
+}
+
+.ox-sidebar__location i {
+  color: var(--ox-gold);
+  margin-right: 4px;
+}
+
+/* --- Typography --------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: $display;
+  color: var(--ox-primary);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  margin-top: 1.8em;
+  margin-bottom: 0.4em;
+}
+
+h1 { font-size: 2rem;   border-bottom: none !important; padding-bottom: 0 !important; }
+h2 { font-size: 1.5rem;  }
+h3 { font-size: 1.18rem; }
+
+.page__content > h1 {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 1.6rem;
+  margin-top: 2.4em;
+}
+.page__content > h1::before,
+.page__content > h1::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--ox-gold);
+  opacity: 0.65;
+}
+
+.page__content p, .page__content li {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--ox-text);
+}
+
+.page__content ul {
+  padding-left: 1.2em;
+}
+
+.page__content li {
+  margin-bottom: 0.25em;
+}
+
+.page__content strong, .page__content b {
+  color: var(--ox-primary);
+  font-weight: 700;
+}
+
+/* --- Links -------------------------------------------------------------- */
+/* Always show a soft gold underline so links read as links statically,
+   then deepen on hover. Buttons that opt out (e.g. .ox-pub__link, sidebar
+   social icons) override `background-image: none !important` themselves. */
+.page__content a {
+  color: var(--ox-link);
+  text-decoration: none;
+  background-image: linear-gradient(rgba(200, 169, 81, 0.55), rgba(200, 169, 81, 0.55));
+  background-size: 100% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 0.25s ease-out, background-image 0.25s ease-out, color 0.2s ease-out;
+  padding-bottom: 1px;
+}
+
+.page__content a:hover {
+  color: var(--ox-link-hover);
+  background-image: linear-gradient(var(--ox-gold), var(--ox-gold));
+  background-size: 100% 2px;
+}
+
+/* --- About header block (avatar + name + GS badge) ---------------------- */
+.ox-about-header {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 1.5em;
+}
+
+.ox-about-header__avatar {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  border: 3px solid var(--ox-gold);
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--ox-primary);
+  box-shadow: 0 0 0 0 rgba(200, 169, 81, 0.55);
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.4s ease-out;
+  cursor: zoom-in;
+}
+
+.ox-about-header__avatar:hover {
+  transform: scale(1.05) rotate(-1deg);
+  box-shadow: 0 0 0 6px rgba(200, 169, 81, 0.18), 0 8px 22px rgba(0, 33, 71, 0.18);
+}
+
+.ox-about-header__info { flex: 1; min-width: 0; }
+
+.ox-about-header__name {
+  font-family: $display;
+  color: var(--ox-primary);
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.1;
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
+}
+
+.ox-about-header__meta {
+  font-family: $sans-serif;
+  color: var(--ox-text-muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.ox-about-header__citations img {
+  height: 20px;
+  vertical-align: middle;
+}
+
+/* --- Research chips ----------------------------------------------------- */
+.ox-chips {
+  margin: 1.2em 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ox-chip {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  font-family: $sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--ox-primary);
+  border: 1px solid var(--ox-primary);
+  padding: 4px 13px;
+  border-radius: $radius-pill;
+  background: transparent;
+  transition: color 0.28s ease-out, border-color 0.28s ease-out, transform 0.25s ease-out;
+  cursor: default;
+  z-index: 0;
+}
+
+.ox-chip::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--ox-primary), mix(#002147, #c8a951, 55%));
+  transform: translateX(-101%);
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+  z-index: -1;
+}
+
+.ox-chip:hover {
+  color: var(--ox-gold);
+  border-color: var(--ox-primary);
+  transform: translateY(-2px);
+}
+
+.ox-chip:hover::before {
+  transform: translateX(0);
+}
+
+/* --- Seeking-PhD callout ------------------------------------------------ */
+.ox-callout {
+  border: 1px solid var(--ox-border);
+  border-left: 3px solid var(--ox-gold);
+  background: linear-gradient(180deg, rgba(200,169,81,0.06), rgba(200,169,81,0.02));
+  padding: 14px 16px;
+  margin: 1.6em 0;
+  border-radius: $radius-md;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--ox-text);
+}
+
+.ox-callout__label {
+  font-family: $sans-serif;
+  font-size: 0.7rem;
+  color: var(--ox-primary);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Seeking-PhD callout: highlight label in red for urgency */
+.ox-callout--seeking .ox-callout__label {
+  color: #c1372b;
+}
+
+/* --- Sidebar avatar breathing glow ------------------------------------- */
+@keyframes ox-avatar-breathe {
+  0%   { box-shadow: 0 0 0 0 rgba(200, 169, 81, 0.45); }
+  70%  { box-shadow: 0 0 0 12px rgba(200, 169, 81, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(200, 169, 81, 0); }
+}
+
+.ox-sidebar__avatar {
+  animation: ox-avatar-breathe 3.6s ease-out infinite;
+}
+
+.ox-sidebar__avatar:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ox-sidebar__avatar {
+    animation: none;
+  }
+}
+
+/* --- Tablet: keep two columns but shrink sidebar -------------------- */
+@include breakpoint(max-width 880px) {
+  #main {
+    grid-template-columns: 200px minmax(0, 1fr) !important;
+    gap: 28px !important;
+  }
+  .ox-sidebar__avatar { width: 120px; height: 120px; }
+  .ox-sidebar__name { font-size: 1.25rem; }
+  .ox-sidebar__globe { min-height: auto; }
+}
+
+/* --- Mobile: only collapse to single column on phones --------------- */
+@include breakpoint(max-width $small) {
+  html { font-size: 14.5px; }
+
+  #main {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+    padding: 20px 16px 40px !important;
+  }
+  .sidebar.sticky { position: static !important; }
+  .ox-sidebar {
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 16px 12px;
+  }
+  .ox-sidebar__avatar { width: 110px; height: 110px; }
+  .ox-sidebar__name { font-size: 1.3rem; }
+}

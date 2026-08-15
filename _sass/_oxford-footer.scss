@@ -1,0 +1,79 @@
+/* ==========================================================================
+   Footer — Oxford Classic
+   ========================================================================== */
+
+.ox-footer {
+  border-top: 1px solid var(--ox-border);
+  background: var(--ox-bg);
+  padding: 28px clamp(20px, 4vw, 64px) 36px;
+  margin-top: 40px;
+}
+
+.ox-footer__inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.ox-footer__social {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+}
+
+.ox-footer__social a {
+  color: var(--ox-primary);
+  font-size: 1.1rem;
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease-out;
+  background-image: none !important;
+  text-decoration: none;
+}
+
+.ox-footer__social a:hover {
+  color: var(--ox-gold);
+  transform: translateY(-2px);
+}
+
+.ox-footer__rednote {
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
+  filter: grayscale(1);
+  opacity: 0.85;
+}
+
+.ox-footer__social a:hover .ox-footer__rednote {
+  filter: none;
+  opacity: 1;
+}
+
+.ox-footer__globe {
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+  margin: 8px 0;
+  opacity: 0.7;
+  overflow: hidden;
+}
+.ox-footer__globe canvas,
+.ox-footer__globe iframe {
+  max-width: 64px !important;
+  max-height: 64px !important;
+}
+
+.ox-footer__copy {
+  font-family: $sans-serif;
+  font-size: 0.72rem;
+  color: var(--ox-text-muted);
+  letter-spacing: 0.08em;
+  margin: 12px 0 0;
+}

@@ -1,0 +1,307 @@
+/* ==========================================================================
+   OXFORD CLASSIC — PRINT STYLESHEET
+   --------------------------------------------------------------------------
+   Goal: when the user hits Cmd+P / Ctrl+P, produce a clean, A4-friendly
+   black-on-white CV-like printout. Hides screen-only chrome (topnav,
+   progress bar, toggles, BibTeX panels, footer globe, dark-mode toggle),
+   forces the light theme regardless of [data-theme], collapses the
+   two-column sidebar layout into a single-column flow, and shows external
+   URLs inline so the page is useful on paper.
+   Wrapped entirely in @media print so screen rendering is untouched.
+   ========================================================================== */
+
+@media print {
+
+  /* -------- Force light colour scheme regardless of [data-theme] -------- */
+  html,
+  html[data-theme="dark"],
+  html[data-theme="light"] {
+    color-scheme: light !important;
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  body,
+  body[data-theme="dark"],
+  body[data-theme="light"] {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 11pt;
+    line-height: 1.45;
+    -webkit-print-color-adjust: economy;
+    print-color-adjust: economy;
+  }
+
+  /* Reset CSS custom properties that may carry dark-theme values */
+  :root,
+  html[data-theme="dark"],
+  html[data-theme="light"] {
+    --ox-bg: #fff !important;
+    --ox-bg-alt: #fff !important;
+    --ox-ink: #000 !important;
+    --ox-ink-soft: #222 !important;
+    --ox-ink-muted: #444 !important;
+    --ox-rule: #999 !important;
+    --ox-card: #fff !important;
+    --ox-card-bg: #fff !important;
+    --ox-shadow: none !important;
+  }
+
+  /* -------- Page geometry -------- */
+  @page {
+    size: A4;
+    margin: 18mm 16mm 18mm 16mm;
+  }
+
+  /* -------- Hide screen-only chrome -------- */
+  .ox-topnav,
+  .ox-progress,
+  .ox-to-top,
+  .ox-mount-veil,
+  .ox-footer__globe,
+  .ox-theme-toggle,
+  .ox-darkmode-toggle,
+  [data-theme-toggle],
+  .masthead,
+  .toc,
+  .page__share,
+  .page__related,
+  .ads,
+  .page__footer,
+  .ox-pub__bib-toggle,
+  .ox-pub__bib,
+  .ox-pub .copy-btn,
+  nav.ox-topnav,
+  .skip-link {
+    display: none !important;
+  }
+
+  /* -------- Layout: collapse two-column to single-column flow -------- */
+  .ox-layout,
+  .ox-shell,
+  .ox-main,
+  .ox-content,
+  .layout--single,
+  .page__inner-wrap,
+  .archive {
+    display: block !important;
+    grid-template-columns: none !important;
+    grid-template-areas: none !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    float: none !important;
+    position: static !important;
+  }
+
+  /* Sidebar: prints first, inline, no longer sticky */
+  .sidebar,
+  .ox-sidebar,
+  .author__avatar,
+  .author__content,
+  .author__urls-wrapper {
+    position: static !important;
+    float: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 0 8mm 0 !important;
+    padding: 0 !important;
+    top: auto !important;
+    bottom: auto !important;
+    box-shadow: none !important;
+    border: 0 !important;
+  }
+
+  .ox-sidebar {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  .author__avatar img,
+  .ox-sidebar img {
+    width: 90px !important;
+    height: 90px !important;
+    border-radius: 50% !important;
+  }
+
+  /* Show author URL list as plain inline text, not a button bar */
+  .author__urls {
+    list-style: none;
+    padding: 0;
+    margin: 4pt 0;
+  }
+  .author__urls li {
+    display: inline;
+    margin-right: 8pt;
+  }
+  .author__urls a {
+    color: #000 !important;
+    text-decoration: none !important;
+  }
+
+  /* -------- Typography -------- */
+  h1, h2, h3, h4, h5, h6 {
+    color: #000 !important;
+    page-break-after: avoid;
+    break-after: avoid;
+    font-family: "Playfair Display", Georgia, serif;
+  }
+  h1 { font-size: 20pt; margin: 0 0 6pt; }
+  h2 { font-size: 14pt; margin: 14pt 0 4pt; border: 0 !important; }
+  h3 { font-size: 12pt; margin: 10pt 0 3pt; }
+  h4, h5, h6 { font-size: 11pt; margin: 8pt 0 2pt; }
+
+  /* Section headings: strip the gold flex side rules (decorative, won't
+     reproduce well on paper) */
+  h2::before, h2::after,
+  h3::before, h3::after,
+  .ox-section__title::before,
+  .ox-section__title::after {
+    content: none !important;
+    display: none !important;
+    background: none !important;
+    border: 0 !important;
+  }
+
+  p, li {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* -------- Links: show URL inline for external links -------- */
+  a, a:visited {
+    color: #000 !important;
+    text-decoration: underline;
+  }
+  a[href^="http"]::after,
+  a[href^="https"]::after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    font-style: italic;
+    word-break: break-all;
+  }
+  /* Don't print URLs for in-page anchors or javascript actions */
+  a[href^="#"]::after,
+  a[href^="javascript:"]::after,
+  a[href^="mailto:"]::after {
+    content: "";
+  }
+
+  /* -------- Publications -------- */
+  .ox-pub,
+  .archive__item,
+  .publication {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin: 0 0 8pt 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .ox-pub__thumb,
+  .archive__item-teaser,
+  .publication__thumb {
+    width: 60px !important;
+    height: auto !important;
+    max-width: 60px !important;
+    float: left;
+    margin: 0 8pt 4pt 0 !important;
+    box-shadow: none !important;
+    border: 1px solid #bbb !important;
+  }
+
+  .ox-pub__thumb img,
+  .archive__item-teaser img,
+  .publication__thumb img {
+    width: 100% !important;
+    height: auto !important;
+    transform: none !important;
+    transition: none !important;
+    filter: none !important;
+  }
+
+  /* Kill hover effects everywhere */
+  .ox-pub:hover,
+  .ox-pub__thumb:hover,
+  .archive__item:hover,
+  a:hover {
+    transform: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+
+  .ox-pub__title,
+  .archive__item-title {
+    font-size: 11.5pt;
+    font-weight: 600;
+    margin: 0 0 2pt 0 !important;
+  }
+
+  .ox-pub__authors,
+  .ox-pub__venue,
+  .archive__item-excerpt {
+    font-size: 10pt;
+    margin: 0 0 2pt 0 !important;
+    color: #222 !important;
+  }
+
+  .ox-pub__badges,
+  .ox-pub__links {
+    display: none !important;
+  }
+
+  /* Clear floats after each publication block */
+  .ox-pub::after,
+  .archive__item::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+
+  /* -------- Tables, code, blockquote -------- */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th, td {
+    border: 1px solid #888;
+    padding: 4pt 6pt;
+  }
+  pre, code {
+    background: #f4f4f4 !important;
+    color: #000 !important;
+    border: 1px solid #ccc !important;
+    font-size: 9.5pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  blockquote {
+    border-left: 2pt solid #888 !important;
+    color: #222 !important;
+    margin: 6pt 0;
+    padding-left: 8pt;
+  }
+
+  /* -------- Images: cap width to page -------- */
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* -------- Footer: keep minimal text only -------- */
+  .ox-footer,
+  .page__footer-copyright {
+    display: block !important;
+    color: #555 !important;
+    font-size: 9pt;
+    border-top: 1px solid #ccc;
+    margin-top: 10pt;
+    padding-top: 4pt;
+  }
+
+}

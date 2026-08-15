@@ -1,0 +1,123 @@
+/* ==========================================================================
+   Oxford Classic — page-mount sweep, hero name gradient, dot-grid background
+   ========================================================================== */
+
+/* --- 1) Page-mount sweep --------------------------------------------------- */
+/* A thin gold horizontal line sweeps L→R once on load, then fades out.
+   Pure-CSS approach: animation triggers when <body> gets `.js-loaded`. */
+.ox-mount-veil {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(200, 169, 81, 0.0) 10%,
+    var(--ox-gold) 50%,
+    rgba(200, 169, 81, 0.0) 90%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  opacity: 0;
+  z-index: 102; /* above .ox-progress (101) and .ox-topnav (100) */
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+body.js-loaded .ox-mount-veil {
+  animation: ox-mount-sweep 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+@keyframes ox-mount-sweep {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* Skip ceremony entirely under reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  body.js-loaded .ox-mount-veil,
+  .ox-mount-veil {
+    animation: none !important;
+    display: none !important;
+  }
+}
+
+/* --- 2) Hero name gradient (.ox-sidebar__name) ----------------------------- */
+.ox-sidebar__name {
+  /* Light-mode gradient: blue dominant, fading to gold accent */
+  background: linear-gradient(
+    110deg,
+    var(--ox-primary) 0%,
+    var(--ox-primary) 40%,
+    mix(#c8a951, #002147, 50%) 70%,
+    var(--ox-gold) 100%
+  );
+  background-size: 200% 100%;
+  background-position: 0% 50%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  transition: background-position 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.ox-sidebar__name:hover {
+  background-position: 100% 50%;
+}
+
+/* Dark-mode: gold-dominant gradient sweeping the other way */
+html[data-theme="dark"] .ox-sidebar__name {
+  background: linear-gradient(
+    110deg,
+    var(--ox-gold) 0%,
+    mix(#c8a951, #e8e6de, 60%) 70%,
+    #e8e6de 100%
+  );
+  background-size: 200% 100%;
+  background-position: 100% 50%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+html[data-theme="dark"] .ox-sidebar__name:hover {
+  background-position: 0% 50%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ox-sidebar__name,
+  html[data-theme="dark"] .ox-sidebar__name {
+    transition: none;
+  }
+}
+
+/* --- 3) Subtle background dot grid ---------------------------------------- */
+/* Layer a 16px-spaced dot pattern over the existing parchment fill.
+   Existing rule: `body { background: var(--ox-bg); }` (a solid color).
+   We override with a layered shorthand: image first, then base color. */
+body {
+  background:
+    radial-gradient(rgba(0, 33, 71, 0.06) 1px, transparent 1px) 0 0 / 16px 16px,
+    var(--ox-bg);
+}
+
+html[data-theme="dark"] body {
+  background:
+    radial-gradient(rgba(200, 169, 81, 0.08) 1px, transparent 1px) 0 0 / 16px 16px,
+    var(--ox-bg);
+}

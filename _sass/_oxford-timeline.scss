@@ -1,0 +1,151 @@
+/* ==========================================================================
+   News timeline — Oxford Classic
+   Vertical timeline with gold rule, gold dots, and surface-aware hover halo.
+   Visual family with .ox-pub: gold accent, surface bg, subtle hover lift.
+   ========================================================================== */
+
+.ox-timeline {
+  list-style: none;
+  position: relative;
+  margin: 1.2em 0 0;
+  padding: 6px 0 6px 24px;
+
+  /* Vertical gold rule running the full height of the list */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    left: 5px;
+    width: 1.5px;
+    background: linear-gradient(
+      180deg,
+      rgba(200, 169, 81, 0.0) 0%,
+      var(--ox-gold) 8%,
+      var(--ox-gold) 92%,
+      rgba(200, 169, 81, 0.0) 100%
+    );
+    pointer-events: none;
+  }
+}
+
+.ox-timeline__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 14px;
+  align-items: baseline;
+  padding: 10px 0 10px 18px;
+  transition: transform 0.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  & + & {
+    border-top: 1px dashed transparent; /* keeps spacing rhythm consistent */
+  }
+}
+
+.ox-timeline__dot {
+  position: absolute;
+  left: -22px;
+  top: 16px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ox-gold);
+  /* Outer ring matches page background so dot reads as sitting *on* the line */
+  box-shadow: 0 0 0 2px var(--ox-bg);
+  transition:
+    transform 0.2s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.25s ease-out;
+}
+
+.ox-timeline__date {
+  font-family: $sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ox-text-muted);
+  padding-top: 2px;
+  white-space: nowrap;
+  transition: color 0.2s ease-out;
+}
+
+.ox-timeline__text {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: var(--ox-text);
+  transition: transform 0.2s cubic-bezier(0.2, 0.7, 0.2, 1), color 0.2s ease-out;
+}
+
+/* Bold venue inside news text picks up a subtle gold accent */
+.ox-timeline__text strong,
+.ox-timeline__text b {
+  color: var(--ox-primary);
+  font-weight: 700;
+}
+
+/* Hover state — gold halo, dot scale, gentle text shift */
+.ox-timeline__item:hover .ox-timeline__dot {
+  transform: scale(1.5);
+  box-shadow:
+    0 0 0 2px var(--ox-bg),
+    0 0 0 6px rgba(200, 169, 81, 0.25);
+}
+
+.ox-timeline__item:hover .ox-timeline__text {
+  transform: translateX(3px);
+  color: var(--ox-primary);
+}
+
+.ox-timeline__item:hover .ox-timeline__date {
+  color: var(--ox-primary);
+}
+
+/* Mobile: stack date above text, keep the rule and dots on the left */
+@include breakpoint(max-width 600px) {
+  .ox-timeline {
+    padding-left: 22px;
+  }
+  .ox-timeline__item {
+    grid-template-columns: 1fr;
+    gap: 2px;
+    padding: 8px 0 8px 14px;
+  }
+  .ox-timeline__date {
+    font-size: 0.68rem;
+  }
+  .ox-timeline__text {
+    font-size: 0.92rem;
+  }
+  .ox-timeline__dot {
+    left: -18px;
+    top: 14px;
+  }
+}
+
+/* Dark mode — ring blends into dark bg via --ox-bg, halo is slightly stronger */
+html[data-theme="dark"] .ox-timeline__item:hover .ox-timeline__dot {
+  box-shadow:
+    0 0 0 2px var(--ox-bg),
+    0 0 0 6px rgba(200, 169, 81, 0.35);
+}
+
+html[data-theme="dark"] .ox-timeline__item:hover .ox-timeline__text,
+html[data-theme="dark"] .ox-timeline__item:hover .ox-timeline__date {
+  color: var(--ox-gold);
+}
+
+/* Respect reduced motion — kill any transform/transition on the timeline */
+@media (prefers-reduced-motion: reduce) {
+  .ox-timeline__item,
+  .ox-timeline__dot,
+  .ox-timeline__text,
+  .ox-timeline__date {
+    transition: none !important;
+  }
+  .ox-timeline__item:hover .ox-timeline__dot,
+  .ox-timeline__item:hover .ox-timeline__text {
+    transform: none !important;
+  }
+}

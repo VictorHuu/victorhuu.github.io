@@ -1,0 +1,346 @@
+/* ==========================================================================
+   Publication items — Oxford Classic (fancy edition)
+   ========================================================================== */
+
+.ox-pub-list {
+  margin: 1.2em 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ox-pub {
+  position: relative;
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 22px;
+  align-items: start;
+  padding: 18px 20px 18px 18px;
+  background: var(--ox-surface);
+  border: 1px solid var(--ox-border);
+  border-radius: 10px;
+  overflow: hidden;
+  transition:
+    transform 0.28s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.28s cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 0.25s ease-out,
+    background 0.25s ease-out;
+}
+
+/* Left gold accent bar — slides in on hover */
+.ox-pub::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--ox-gold), mix(#c8a951, #002147, 70%));
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.ox-pub:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 1px 1px rgba(0, 33, 71, 0.04),
+    0 10px 28px rgba(0, 33, 71, 0.14);
+  border-color: rgba(200, 169, 81, 0.55);
+}
+
+.ox-pub:hover::before {
+  transform: scaleY(1);
+}
+
+.ox-pub__thumb {
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  border: 1px solid var(--ox-border);
+  background: linear-gradient(135deg, #f6f4ef 0%, #eeeadb 100%);
+}
+
+.ox-pub__thumb img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  transition:
+    transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+    filter 0.3s ease-out;
+}
+
+.ox-pub:hover .ox-pub__thumb img {
+  transform: scale(1.06);
+  filter: brightness(1.04) saturate(1.08);
+}
+
+/* Subtle sheen that sweeps across thumbnail on hover */
+.ox-pub__thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0.35) 50%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  pointer-events: none;
+}
+
+.ox-pub:hover .ox-pub__thumb::after {
+  transform: translateX(120%);
+}
+
+.ox-pub__body { min-width: 0; padding-top: 2px; }
+
+.ox-pub__title {
+  font-family: $display;
+  color: var(--ox-primary);
+  font-size: 1.18rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0 0 6px;
+  transition: color 0.2s ease-out;
+}
+
+.ox-pub:hover .ox-pub__title {
+  color: mix(#002147, #c8a951, 55%);
+}
+
+.ox-pub__authors {
+  font-size: 0.97rem;
+  color: var(--ox-text);
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+.ox-pub__authors strong,
+.ox-pub__authors b {
+  color: var(--ox-primary);
+}
+
+.ox-pub__venue {
+  font-size: 0.92rem;
+  color: var(--ox-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.ox-pub__badge {
+  font-family: $sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ox-gold);
+  background: var(--ox-primary);
+  padding: 3px 9px;
+  border-radius: $radius-sm;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+.ox-pub:hover .ox-pub__badge {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 33, 71, 0.2);
+}
+
+.ox-pub__venue-full { font-style: italic; }
+
+.ox-pub__links {
+  margin-top: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ox-pub__link {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  font-family: $sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--ox-primary);
+  padding: 4px 12px;
+  border: 1px solid var(--ox-border);
+  border-radius: $radius-sm;
+  background-image: none !important;
+  background-color: transparent;
+  transition: color 0.25s ease-out, border-color 0.25s ease-out;
+  z-index: 0;
+}
+
+.ox-pub__link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--ox-primary);
+  transform: translateX(-101%);
+  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+  z-index: -1;
+}
+
+.ox-pub__link:hover {
+  color: var(--ox-gold);
+  border-color: var(--ox-primary);
+}
+
+.ox-pub__link:hover::before {
+  transform: translateX(0);
+}
+
+.ox-pub__bib-toggle[aria-expanded="true"] {
+  color: var(--ox-gold);
+  border-color: var(--ox-primary);
+}
+.ox-pub__bib-toggle[aria-expanded="true"]::before {
+  transform: translateX(0);
+}
+
+/* --- BibTeX panel --- */
+.ox-pub__bib {
+  position: relative;
+  margin-top: 10px;
+  padding: 10px 12px 10px 14px;
+  background: linear-gradient(180deg, rgba(0, 33, 71, 0.04), rgba(200, 169, 81, 0.03));
+  border: 1px solid var(--ox-border);
+  border-left: 3px solid var(--ox-gold);
+  border-radius: 6px;
+  font-size: 0.78rem;
+}
+
+.ox-pub__bib[hidden] { display: none; }
+
+.ox-pub__bib pre {
+  margin: 0;
+  padding: 0;
+  background: transparent !important;
+  border: 0;
+  overflow-x: auto;
+}
+
+.ox-pub__bib code {
+  font-family: $monospace;
+  color: var(--ox-text);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  background: transparent !important;
+  padding: 0 !important;
+  white-space: pre;
+}
+
+.ox-pub__bib-copy {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-family: $sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ox-primary);
+  background: var(--ox-surface);
+  border: 1px solid var(--ox-border);
+  border-radius: 4px;
+  padding: 3px 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+}
+.ox-pub__bib-copy:hover {
+  color: var(--ox-gold);
+  background: var(--ox-primary);
+  border-color: var(--ox-primary);
+}
+.ox-pub__bib-copy[data-copied="true"] {
+  color: $oxford-gold;
+  background: $oxford-blue;
+  border-color: $oxford-blue;
+}
+
+@include breakpoint(max-width $small) {
+  .ox-pub {
+    grid-template-columns: 96px 1fr;
+    gap: 14px;
+    padding: 14px 14px 14px 12px;
+  }
+  .ox-pub__thumb img { width: 96px; height: 96px; }
+  .ox-pub__title { font-size: 1rem; }
+}
+
+/* --- First-author badge (overlay on thumbnail) --- */
+.ox-pub__first {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  font-family: $sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $oxford-blue-deep;
+  background: $oxford-gold;
+  padding: 2px 7px;
+  border-radius: $radius-sm;
+  box-shadow: 0 1px 4px rgba(0, 33, 71, 0.3);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* --- Method / topic tag chips ---
+   Visually distinct from the action buttons (.ox-pub__link) below:
+   - pill capsule shape vs the buttons' square border-radius
+   - soft gold tint fill + no border vs the buttons' transparent + border
+   - mixed-case label text + smaller weight — reads as a tag, not a CTA
+*/
+.ox-pub__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 4px 0 10px;
+}
+
+.ox-pub__tag {
+  font-family: $sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: mix(#002147, #c8a951, 60%);
+  background: rgba(200, 169, 81, 0.14);
+  border: 0;
+  padding: 2px 10px;
+  border-radius: $radius-pill;
+  transition: color 0.2s, background 0.2s, transform 0.2s;
+}
+
+.ox-pub:hover .ox-pub__tag {
+  color: var(--ox-primary);
+  background: rgba(200, 169, 81, 0.24);
+}
+
+/* --- External-link arrow (only on anchor links, not BibTeX toggle) --- */
+a.ox-pub__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+a.ox-pub__link .ox-pub__link-arrow {
+  display: inline-block;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+}
+
+a.ox-pub__link:hover .ox-pub__link-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}

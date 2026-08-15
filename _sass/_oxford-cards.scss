@@ -1,0 +1,316 @@
+/* ==========================================================================
+   Oxford Classic — Education + Honors cards & gold-highlight <mark>
+   Visual family with .ox-pub: surface bg, 1px border, gold left bar slides
+   in on hover, lift + soft shadow on hover.
+   Wired into main.scss via @import "oxford-cards"; (handled by user).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Shared keyword highlight — used in About bio.
+   Behaves like a gold highlighter pen sitting *behind* the text baseline.
+   -------------------------------------------------------------------------- */
+.ox-mark {
+  background: linear-gradient(
+    transparent 60%,
+    rgba(200, 169, 81, 0.35) 60%
+  );
+  color: inherit;
+  padding: 0 2px;
+  border-radius: 1px;
+  /* Keep the bold text inside legible — no extra weight tweak. */
+  -webkit-box-decoration-break: clone;
+          box-decoration-break: clone;
+}
+
+/* ==========================================================================
+   Education — 3-card responsive grid (.ox-edu)
+   ========================================================================== */
+
+.ox-edu {
+  list-style: none;
+  margin: 1.2em 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.ox-edu__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 18px 18px 16px 20px;
+  background: var(--ox-surface);
+  border: 1px solid var(--ox-border);
+  border-radius: 10px;
+  overflow: hidden;
+  transition:
+    transform 0.28s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.28s cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 0.25s ease-out,
+    background 0.25s ease-out;
+}
+
+/* Gold left accent bar — slides in on hover (mirrors .ox-pub) */
+.ox-edu__card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--ox-gold), mix(#c8a951, #002147, 70%));
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.ox-edu__card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 1px 1px rgba(0, 33, 71, 0.04),
+    0 8px 22px rgba(0, 33, 71, 0.12);
+  border-color: rgba(200, 169, 81, 0.55);
+}
+.ox-edu__card:hover::before { transform: scaleY(1); }
+
+.ox-edu__icon {
+  font-size: 1.6rem;
+  line-height: 1;
+  margin-bottom: 6px;
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.ox-edu__card:hover .ox-edu__icon {
+  transform: translateY(-1px) rotate(-4deg);
+}
+
+.ox-edu__dates {
+  font-family: $sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--ox-text-muted);
+  margin-bottom: 4px;
+}
+
+.ox-edu__degree {
+  font-family: $display;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--ox-primary);
+  margin: 0 0 2px;
+}
+
+.ox-edu__institution {
+  font-family: $georgia;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--ox-text);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.ox-edu__honour {
+  display: inline-block;
+  margin-top: 10px;
+  font-family: $sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ox-gold);
+  background: var(--ox-primary);
+  padding: 3px 9px;
+  border-radius: $radius-sm;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+}
+
+/* ==========================================================================
+   Honors and Awards — card grid (.ox-honors)
+   ========================================================================== */
+
+.ox-honors-section + .ox-honors-section {
+  margin-top: 1.6em;
+}
+
+.ox-honors__heading {
+  font-family: $display;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ox-primary);
+  margin: 0.8em 0 0.6em;
+  letter-spacing: 0.01em;
+}
+
+.ox-honors {
+  list-style: none;
+  margin: 0.4em 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.ox-honors__card {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 14px;
+  padding: 16px 18px 14px 18px;
+  background: var(--ox-surface);
+  border: 1px solid var(--ox-border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition:
+    transform 0.28s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.28s cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 0.25s ease-out,
+    background 0.25s ease-out;
+}
+
+/* Gold left accent bar — slides in on hover (mirrors .ox-pub) */
+.ox-honors__card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--ox-gold), mix(#c8a951, #002147, 70%));
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.ox-honors__card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 1px 1px rgba(0, 33, 71, 0.04),
+    0 8px 22px rgba(0, 33, 71, 0.12);
+  border-color: rgba(200, 169, 81, 0.55);
+}
+.ox-honors__card:hover::before { transform: scaleY(1); }
+
+.ox-honors__emoji {
+  font-size: 1.4rem;
+  line-height: 1.1;
+  margin-top: 2px;
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.ox-honors__card:hover .ox-honors__emoji {
+  transform: translateY(-1px) scale(1.06);
+}
+
+.ox-honors__chip {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-family: $sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ox-gold);
+  /* Slight surface backing so chip stays legible against any bg */
+  background: transparent;
+}
+
+.ox-honors__body {
+  min-width: 0;
+  /* Keep text from sliding under the absolute date chip */
+  padding-right: 64px;
+}
+
+.ox-honors__title {
+  font-family: $display;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ox-primary);
+  line-height: 1.3;
+  margin: 0 0 4px;
+}
+
+.ox-honors__institution {
+  font-family: $sans-serif;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--ox-text-muted);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Mobile — collapse honors to single column.
+   (Education already auto-fits via minmax.)
+   -------------------------------------------------------------------------- */
+@include breakpoint(max-width $small) {
+  .ox-honors {
+    grid-template-columns: 1fr;
+  }
+  .ox-honors__body { padding-right: 70px; }
+  .ox-edu__card { padding: 16px 16px 14px 18px; }
+}
+
+/* ==========================================================================
+   Dark mode — slightly stronger gold underline; honors/edu cards inherit
+   --ox-surface / --ox-border / --ox-primary which already swap.
+   ========================================================================== */
+
+html[data-theme="dark"] .ox-mark {
+  background: linear-gradient(
+    transparent 60%,
+    rgba(200, 169, 81, 0.45) 60%
+  );
+}
+
+html[data-theme="dark"] .ox-edu__degree,
+html[data-theme="dark"] .ox-honors__title,
+html[data-theme="dark"] .ox-honors__heading {
+  color: $oxford-gold;
+}
+
+html[data-theme="dark"] .ox-edu__institution {
+  color: var(--ox-text);
+}
+
+html[data-theme="dark"] .ox-edu__honour {
+  /* In dark mode --ox-primary becomes gold, so invert the chip for contrast */
+  color: $oxford-blue-deep;
+  background: var(--ox-gold);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+html[data-theme="dark"] .ox-edu__card:hover,
+html[data-theme="dark"] .ox-honors__card:hover {
+  box-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.4),
+    0 10px 26px rgba(0, 0, 0, 0.55);
+  border-color: rgba(200, 169, 81, 0.55);
+}
+
+/* ==========================================================================
+   Reduced motion — keep the gold bar visible (no animation)
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .ox-edu__card,
+  .ox-edu__card::before,
+  .ox-edu__icon,
+  .ox-honors__card,
+  .ox-honors__card::before,
+  .ox-honors__emoji {
+    transition: none !important;
+  }
+  .ox-edu__card:hover,
+  .ox-honors__card:hover {
+    transform: none;
+  }
+  .ox-edu__card:hover .ox-edu__icon,
+  .ox-honors__card:hover .ox-honors__emoji {
+    transform: none;
+  }
+}
