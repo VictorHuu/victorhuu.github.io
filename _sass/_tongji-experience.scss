@@ -1,0 +1,132 @@
+/* Research timeline adapted from kikixiong/kikixiong.github.io,
+   snapshot b977bae9d59304651804f3e2b5434d25a8559e33 (_oxford-sections.scss).
+   Scoped to experience; existing Tongji palette, fonts and education cards
+   remain unchanged. */
+.ox-roadmap--experience {
+  list-style: none;
+  padding: 0;
+  margin: 1.2em 0 0;
+}
+
+.ox-roadmap--experience .ox-roadmap__step {
+  display: grid;
+  grid-template-columns: 155px minmax(0, 1fr);
+  column-gap: 28px;
+  margin: 0;
+}
+
+.ox-roadmap--experience .ox-roadmap__date {
+  padding: 2px 0 26px;
+  color: var(--ox-text-muted);
+  font-family: $sans-serif;
+  font-size: 0.76rem;
+  line-height: 1.6;
+}
+
+.ox-roadmap--experience .ox-roadmap__body {
+  position: relative;
+  min-width: 0;
+  border-left: 1px solid var(--ox-gold);
+  padding: 0 0 28px 26px;
+}
+
+.ox-roadmap--experience .ox-roadmap__body::before {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: 6px;
+  width: 9px;
+  height: 9px;
+  border: 2px solid var(--ox-gold);
+  border-radius: 50%;
+  background: var(--ox-surface);
+}
+
+.ox-roadmap--experience .ox-roadmap__step:first-child .ox-roadmap__body::before {
+  background: var(--ox-gold);
+}
+
+.ox-roadmap--experience .ox-roadmap__step:last-child .ox-roadmap__body {
+  border-left-color: transparent;
+  padding-bottom: 0;
+}
+
+.ox-roadmap--experience .ox-roadmap__step:last-child .ox-roadmap__date {
+  padding-bottom: 0;
+}
+
+.ox-roadmap--experience .ox-institution {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.ox-roadmap--experience .ox-institution__info {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.ox-roadmap--experience .ox-institution__badge {
+  flex: 0 0 52px;
+  width: 52px;
+  height: 52px;
+  padding: 3px;
+  object-fit: scale-down;
+  background: #fff;
+  border: 1px solid var(--ox-border);
+  border-radius: 8px;
+}
+
+.ox-roadmap--experience .ox-roadmap__title {
+  margin: 0 0 4px;
+  color: var(--ox-primary);
+  font-family: $sans-serif;
+  font-size: 1.12rem;
+  line-height: 1.4;
+}
+
+.ox-roadmap--experience .ox-roadmap__detail {
+  margin: 0;
+  color: var(--ox-text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.ox-roadmap--experience .ox-roadmap__role {
+  margin: 0 0 3px;
+  font-family: $sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--ox-text);
+}
+
+@media (max-width: 880px) {
+  .ox-roadmap--experience .ox-roadmap__step {
+    grid-template-columns: minmax(0, 1fr);
+    margin-left: 5px;
+    padding: 0 0 24px 22px;
+    border-left: 1px solid var(--ox-gold);
+    position: relative;
+  }
+  .ox-roadmap--experience .ox-roadmap__step:last-child {
+    padding-bottom: 0;
+    border-left-color: transparent;
+  }
+  .ox-roadmap--experience .ox-roadmap__date {
+    padding: 0 0 8px;
+  }
+  .ox-roadmap--experience .ox-roadmap__body,
+  .ox-roadmap--experience .ox-roadmap__step:last-child .ox-roadmap__body {
+    position: static;
+    border: 0;
+    padding: 0;
+  }
+}
+
+@media print {
+  .ox-roadmap--experience .ox-roadmap__step {
+    break-inside: avoid;
+  }
+}

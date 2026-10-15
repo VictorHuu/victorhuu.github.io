@@ -1,0 +1,16 @@
+# Adapted from kikixiong/kikixiong.github.io at
+# b977bae9d59304651804f3e2b5434d25a8559e33. Newest first.
+- dates: "Sep 2026 – Present"
+  start_date: "2026-09-01"
+  institution: "HKUST (Guangzhou)"
+  logo: "https://raw.githubusercontent.com/kikixiong/kikixiong.github.io/b977bae9d59304651804f3e2b5434d25a8559e33/images/institutions/hkust-gz.png"
+  role: "Research Intern"
+  supervisor: "Asst. Prof. Sijia Chen"
+  supervisor_url: "https://facultyprofiles.hkust-gz.edu.cn/faculty-personal-page?id=566"
+
+- dates: "Apr 2026 – Jun 2026"
+  institution: "Computer Network Information Center, Chinese Academy of Sciences"
+  logo: "/images/institutions/cnic.ico"
+  role: "Research Intern"
+  supervisor: "Dr. Jiaxin Qi"
+  supervisor_url: "https://simpleshinobu.github.io/"

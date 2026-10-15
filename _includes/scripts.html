@@ -113,31 +113,32 @@
         '.ox-chips'
       ];
       var revealEls = document.querySelectorAll(revealSelectors.join(','));
-      Array.prototype.forEach.call(revealEls, function (el, i) {
-        el.classList.add('ox-reveal');
-        // small stagger for adjacent items
-        el.style.transitionDelay = (Math.min(i, 6) * 0.05) + 's';
-      });
+      var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+      var revealObserver = null;
 
-      if (prefersReduced) {
-        // Skip motion entirely; mark everything visible immediately.
-        Array.prototype.forEach.call(revealEls, function (el) {
-          el.classList.add('ox-reveal--visible');
-        });
-      } else {
-        var revealObserver = new IntersectionObserver(function (entries, obs) {
+      if (!prefersReduced) {
+        revealObserver = new IntersectionObserver(function (entries, obs) {
           entries.forEach(function (entry) {
             if (entry.isIntersecting) {
               entry.target.classList.add('ox-reveal--visible');
               obs.unobserve(entry.target);
             }
           });
-        }, { threshold: 0.15 });
-
-        Array.prototype.forEach.call(revealEls, function (el) {
-          revealObserver.observe(el);
-        });
+        }, { threshold: 0 });
       }
+
+      Array.prototype.forEach.call(revealEls, function (el, i) {
+        // Never hide content already in or above the initial viewport.
+        // This also handles restored scroll positions and direct anchor links.
+        if (!revealObserver || el.getBoundingClientRect().top < viewportHeight) {
+          el.classList.add('ox-reveal--visible');
+          return;
+        }
+        // Enroll successfully before hiding; only below-fold content fades in.
+        revealObserver.observe(el);
+        el.classList.add('ox-reveal');
+        el.style.transitionDelay = (Math.min(i, 6) * 0.05) + 's';
+      });
 
       // ---- 2) Active-nav indicator --------------------------------------
       // Map heading IDs to nav <a href="..."> values

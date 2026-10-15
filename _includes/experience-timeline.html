@@ -1,0 +1,27 @@
+<ol class="ox-roadmap ox-roadmap--experience" aria-label="Research experience timeline">
+  {%- for item in site.data.experience -%}
+    <li class="ox-roadmap__step">
+      <div class="ox-roadmap__date">
+        {%- if item.start_date -%}
+          <time datetime="{{ item.start_date | escape }}">{{ item.dates | escape }}</time>
+        {%- else -%}
+          {{ item.dates | escape }}
+        {%- endif -%}
+      </div>
+      <div class="ox-roadmap__body">
+        <div class="ox-institution">
+          <img class="ox-institution__badge" src="{% if item.logo contains '://' %}{{ item.logo | escape }}{% else %}{{ item.logo | relative_url }}{% endif %}" alt="" width="52" height="52" loading="lazy" decoding="async">
+          <div class="ox-institution__info">
+            <h3 class="ox-roadmap__title">{{ item.institution | escape }}</h3>
+            {%- if item.role -%}
+              <p class="ox-roadmap__role">{{ item.role | escape }}</p>
+            {%- endif -%}
+            {%- if item.supervisor -%}
+              <p class="ox-roadmap__detail">Supervised by {% if item.supervisor_url %}<a href="{{ item.supervisor_url | escape }}">{{ item.supervisor | escape }}</a>{% else %}{{ item.supervisor | escape }}{% endif %}</p>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </li>
+  {%- endfor -%}
+</ol>
