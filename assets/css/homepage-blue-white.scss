@@ -1,0 +1,44 @@
+---
+---
+/*
+ *    victorhuu.github.io — Tongji Academic
+ *    Base: Minimal Mistakes / academicpages (trimmed)
+ */
+
+@import "vendor/breakpoint/breakpoint";
+@import "variables";
+@import "mixins";
+@import "vendor/susy/susy";
+
+@import "reset";
+@import "base";
+
+@import "utilities";
+@import "animations";
+@import "tables";
+@import "buttons";
+@import "notices";
+@import "syntax";
+@import "forms";
+@import "print";
+
+@import "vendor/font-awesome/fontawesome";
+@import "vendor/font-awesome/solid";
+@import "vendor/font-awesome/brands";
+
+/* Tongji academic component system */
+@import "tongji-base";
+@import "tongji-nav";
+@import "tongji-footer";
+@import "tongji-pubs";
+@import "tongji-timeline";
+@import "tongji-cards";
+@import "tongji-experience";
+@import "tongji-decor";
+@import "tongji-progress";
+@import "tongji-anim";
+@import "tongji-dark";
+@import "tongji-print";
+
+/* Final Tongji palette and visual refinements */
+@import "tongji-theme";

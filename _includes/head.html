@@ -30,8 +30,9 @@
 <link rel="icon" type="image/jpg" href="{{ '/images/avator.jpg' | relative_url }}">
 <link rel="apple-touch-icon" href="{{ '/images/avator.jpg' | relative_url }}">
 
-<!-- Apply the local theme immediately. -->
-<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+<!-- Original Tongji blue/white theme from d877a91; a dedicated asset avoids old stylesheet caches.
+     This entry point uses the existing homepage Sass unchanged. Never load research.css here. -->
+<link rel="stylesheet" href="{{ '/assets/css/homepage-blue-white.css' | relative_url }}?v=tongji-d877a91">
 
 <!-- Keep the same fonts without letting their external stylesheet block paint. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
