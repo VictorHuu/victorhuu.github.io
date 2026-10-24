@@ -1,0 +1,42 @@
+# The public knowledge index. Set status to published only after adding article content.
+# Keep article URLs in sync with the corresponding _pages/blog/*.md permalink.
+- id: biological-foundation-models
+  number: "01"
+  title: Biological Foundation Models
+  articles:
+    - id: single-cell-data-representations
+      number: "01.1"
+      section: Data and Representations
+      title: Single-cell Data, Gene and Cell Representations
+      url: /blogs/single-cell-data-representations/
+      status: planned
+    - id: architectures-representation-learning
+      number: "01.2"
+      section: Models and Pretraining
+      title: Foundation Model Architectures and Representation Learning
+      url: /blogs/architectures-representation-learning/
+      status: planned
+    - id: evaluating-representations
+      number: "01.3"
+      section: Evaluation and Transfer
+      title: Evaluating Gene and Cell Representations
+      url: /blogs/evaluating-representations/
+      status: planned
+- id: social-simulation
+  number: "02"
+  title: Social Simulation
+  articles:
+    - id: introduction-social-simulation
+      number: "02.1"
+      title: Introduction to Social Simulation
+      url: /blogs/introduction-social-simulation/
+      status: planned
+- id: multi-agent-systems
+  number: "03"
+  title: Multi-Agent Systems
+  articles:
+    - id: introduction-multi-agent-systems
+      number: "03.1"
+      title: Introduction to Multi-Agent Systems
+      url: /blogs/introduction-multi-agent-systems/
+      status: planned
