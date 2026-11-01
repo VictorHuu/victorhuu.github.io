@@ -5,31 +5,13 @@
   title: Biological Foundation Models
   articles:
     - id: cocos
-      number: "01.4"
+      number: "01.1"
       section: Research Notes
       title: "CoCoS：为什么重建得好，还不等于表征学得好？"
       url: /blogs/cocos/
       status: published
       date: 2026-11-01
       excerpt: "从重建目标与表征几何的差别出发，理解互补视图、固定身份负样本与 GPC，以及实验各自支持什么结论。"
-    - id: single-cell-data-representations
-      number: "01.1"
-      section: Data and Representations
-      title: Single-cell Data, Gene and Cell Representations
-      url: /blogs/single-cell-data-representations/
-      status: planned
-    - id: architectures-representation-learning
-      number: "01.2"
-      section: Models and Pretraining
-      title: Foundation Model Architectures and Representation Learning
-      url: /blogs/architectures-representation-learning/
-      status: planned
-    - id: evaluating-representations
-      number: "01.3"
-      section: Evaluation and Transfer
-      title: Evaluating Gene and Cell Representations
-      url: /blogs/evaluating-representations/
-      status: planned
 - id: social-simulation
   number: "02"
   title: Social Simulation
