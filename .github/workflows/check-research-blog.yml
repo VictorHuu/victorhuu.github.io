@@ -1,0 +1,56 @@
+name: Check research blog rendering
+
+on:
+  push:
+    paths:
+      - '_pages/blog/**'
+      - '_data/blog.yml'
+      - '_layouts/research-blog.html'
+      - '_includes/darkmode-init.html'
+      - 'assets/css/research*.css'
+      - 'assets/js/research*.js'
+      - 'assets/js/darkmode.js'
+      - '_config.yml'
+      - 'docs/check-research-blog.mjs'
+      - '.github/workflows/check-research-blog.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build with the GitHub Pages Jekyll environment
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser-test dependencies outside the site
+        run: |
+          mkdir -p "$RUNNER_TEMP/cocos-browser"
+          cd "$RUNNER_TEMP/cocos-browser"
+          npm install --no-save --package-lock=false playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Verify math, navigation, tables, and responsive layout
+        env:
+          SITE_ROOT: ${{ github.workspace }}/_site
+          SOURCE_ROOT: ${{ github.workspace }}
+          REPORT_DIR: ${{ github.workspace }}/test-results
+        run: |
+          cp docs/check-research-blog.mjs "$RUNNER_TEMP/cocos-browser/check.mjs"
+          node "$RUNNER_TEMP/cocos-browser/check.mjs"
+      - name: Save browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cocos-render-check
+          path: test-results/
+          if-no-files-found: warn
+          retention-days: 14
