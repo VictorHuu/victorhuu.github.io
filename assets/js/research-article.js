@@ -32,11 +32,9 @@
     });
     if (article.dataset.math !== 'true') return;
 
-    // Kramdown emits legacy math/tex script nodes. Convert them to visible,
-    // escaped text delimiters before loading MathJax 3 (which does not scan
-    // those script nodes by default). Keep the TeX intact via textContent.
+    // Support both legacy math/tex nodes and current Kramdown TeX delimiters.
+    // textContent preserves TeX without interpreting it as HTML.
     var sources = prose.querySelectorAll('script[type^="math/tex"]');
-    article.dataset.mathExpected = String(sources.length);
     sources.forEach(function (node) {
       var display = /mode\s*=\s*display/.test(node.type);
       var replacement = document.createElement(display ? 'div' : 'span');
@@ -80,6 +78,23 @@
           if (prose.querySelector('[data-mml-node="merror"], mjx-merror')) {
             throw new Error('Invalid TeX expression');
           }
+          // Current Kramdown emits delimiters rather than legacy script nodes.
+          // Give every rendered display formula a bounded scroll container.
+          prose.querySelectorAll('mjx-container[display="true"]').forEach(function (math) {
+            if (math.closest('.rn-math-block')) return;
+            var parent = math.parentElement;
+            var standalone = parent !== prose && Array.prototype.every.call(parent.childNodes, function (node) {
+              return node === math || (node.nodeType === 3 && !node.textContent.trim());
+            });
+            if (standalone) {
+              parent.classList.add('rn-math-block');
+            } else {
+              var wrap = document.createElement('div');
+              wrap.className = 'rn-math-block';
+              parent.insertBefore(wrap, math);
+              wrap.appendChild(math);
+            }
+          });
           article.dataset.mathState = 'ready';
           article.dataset.mathRendered = String(prose.querySelectorAll('mjx-container').length);
         }).catch(fail);
